@@ -10,9 +10,13 @@
   "devDependencies": {},
   "scripts": {
     "start": "node src/app.js",
-    "dev": "nodemon src/app.js -e,hbs" 
+    "dev": "nodemon src/app.js -e,hbs"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "engines": {
+    "node": "0.10.41",
+    "npm": "1.4.29"
+  }
 }
