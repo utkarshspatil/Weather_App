@@ -59,7 +59,7 @@ app.get('/help/*', (req, res) => {
 	res.render('404', {
 		title: '404',
 		error: 'Help page not found.',
-		name: 'Tim Acker'
+		name: 'Utkarsh Patil'
 	});
 });
 
@@ -67,7 +67,7 @@ app.get('*', (req, res) => {
 	res.render('404', {
 		title: '404',
 		error: 'Page not found.',
-		name: 'Tim Acker'
+		name: 'Utkarsh Patil'
 	});
 });
 
