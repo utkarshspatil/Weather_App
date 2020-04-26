@@ -11,6 +11,7 @@
   "description": "",
   "dependencies": {
     "@react-google-maps/api": "^1.8.8-alpha",
+    "axios": "^0.19.2",
     "dotenv": "^8.2.0"
   }
 }

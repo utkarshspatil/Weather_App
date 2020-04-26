@@ -1,24 +1,21 @@
-const dotenv = require('dotenv');
 const axios = require('axios');
 
-const weather = (lat, lng, callback) => {
-	const url = `http://api.weatherstack.com/current?access_key=191a1ca77eb50ce7bd0e08feb4aa8332&query=${lat},${lng}`;
+const weather = (address,callback) => {
+	const url = `http://api.weatherstack.com/forecast?access_key=191a1ca77eb50ce7bd0e08feb4aa8332&query=${address}`;
 	axios
 		.get(url)
 		.then(({ data } = {}) => {
 			callback(undefined, {
-				summary: data.daily.data[0].summary,
-				temperature: data.currently.temperature,
-				apparentTemperature: data.currently.apparentTemperature
+				location : data.location.name + ", "+ data.location.region +", "+ data.location.country,
+				summary: data.current.weather_descriptions[0],
+				temperature: data.current.temperature
 			});
 		})
 		.catch(error => {
 			if (error.code === 'ENOTFOUND') {
 				callback({ message: 'Unable to connect to servers. Please try again later.' }, undefined);
-			} else if (error.response.status === 400) {
-				callback({ message: 'Invalid input. Please try again.' }, undefined);
 			} else {
-				callback({ message: error.message }, undefined);
+				callback({ message: 'Cannot find location. Please try again'}, undefined);
 			}
 		});
 };

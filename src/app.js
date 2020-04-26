@@ -8,14 +8,10 @@ const PORT = process.env.PORT || 3000;
 const app = express();
 const name = 'Utkarsh Patil';
 
-// Configure handlebars templating engine and define
-// a custom handlebars directory versus the views default
 app.set('view engine', 'hbs');
 app.set('views', path.join(__dirname, '../templates/views'));
 hbs.registerPartials(path.join(__dirname, '../templates/partials'));
 
-// Set location of static assets. This is default to serving
-// index.html at the root url
 app.use(express.static(path.join(__dirname, '../public')));
 
 app.get('/', (req, res) => {
@@ -43,29 +39,22 @@ app.get('/weather', (req, res) => {
 	const errorHandler = error => {
 		res.send({ error });
 	};
-
 	if (!req.query.location) return errorHandler({ message: 'No location provided' });
-
-	geocode(
-		req.query.location,
-		(error, { lat, lng, street, adminArea5, adminArea3, postalCode } = {}) => {
-			if (error) return errorHandler(error);
-
-			weather(lat, lng, (error, { summary, temperature, apparentTemperature } = {}) => {
+	// geocode(
+	// 	req.query.location,
+	// 	(error, { lat, lng} = {}) => {
+	// 		if (error) return errorHandler(error);
+			weather(req.query.location,(error, { location, summary, temperature} = {}) => {
 				if (error) return errorHandler(error);
-
 				res.send({
-					location: `${street} ${adminArea5}, ${adminArea3} ${postalCode}`.trim(),
+					location,
 					summary,
 					temperature,
-					apparentTemperature
 				});
 			});
-		}
-	);
+		
 });
 
-// Handles other help routes not specified
 app.get('/help/*', (req, res) => {
 	res.render('404', {
 		title: '404',
@@ -74,7 +63,6 @@ app.get('/help/*', (req, res) => {
 	});
 });
 
-// Handles all other routes not specified
 app.get('*', (req, res) => {
 	res.render('404', {
 		title: '404',

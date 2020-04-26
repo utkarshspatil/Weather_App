@@ -16,15 +16,15 @@ searchForm.addEventListener('submit', e => {
 			if (data.error) {
 				html = `<h3>${data.error.message}</h3>`;
 			} else {
-				const { location, summary, temperature, apparentTemperature } = data;
+				const { location, summary, temperature} = data;
 				html = `
 					<h2>${location}</h2>
 					<hr>
-					<p>Summary: ${summary}</p>
-					<p>Current Temperature: ${Math.round(temperature)}℉</p>
-					<p>Feels Like: ${Math.round(apparentTemperature)}℉</p>
-				`;
-			}
+					<p>It is ${summary} today.</p>
+					<p>Current Temperature: ${Math.round(temperature)}C.</p>
+				`
+				}
+
 			weatherContainer.innerHTML = html;
 		});
 	});
